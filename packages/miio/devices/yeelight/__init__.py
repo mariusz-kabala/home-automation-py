@@ -21,6 +21,9 @@ def handle_message(msg):
     deviceName = splitted[2]
     toExec = splitted[3]
 
+    if toExec in ['status']:
+        return
+
     light = devices.get(deviceName)
     try:
         jsonMsg = json.loads(str(msg.payload.decode("utf-8", "ignore")))
@@ -45,7 +48,7 @@ def handle_message(msg):
 
     if (commandToExec is None):
         logger.error('Not supported command %s for device %s',
-                     commandToExec, deviceName)
+                     toExec, deviceName)
         return
 
     commandToExec(jsonMsg)
