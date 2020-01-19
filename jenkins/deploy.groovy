@@ -22,7 +22,8 @@ pipeline {
                 script {
                     sshagent(['jenkins-local-ssh-key']) {
                         configFileProvider([configFile(fileId: 'homeAutomationPy-miio-config.py', targetLocation: 'config.py')]) {
-                            sh "ansible-playbook -i deploy/hosts deploy/deploy.yml -e 'app=${app} config_path=./config.py' -vvv"
+                            def workspace = pwd()
+                            sh "ansible-playbook -i deploy/hosts deploy/deploy.yml -e 'app=${app} config_path=${workspace}/config.py' -vvv"
                         }
                     }
                 }
