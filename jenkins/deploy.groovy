@@ -1,7 +1,7 @@
 def branch = '';
 
 pipeline {
-    agent { docker { image 'ansible/ansible' } }
+    agent { docker { image 'ansible/ansible:default' } }
     
     environment {
         CI = 'true'
