@@ -1,7 +1,7 @@
 def branch = '';
 
 pipeline {
-    agent { docker { image 'ansible/ansible:default' } }
+    agent { docker { image 'docker-registry.kabala.tech/ansible:latest' } }
     
     environment {
         CI = 'true'
