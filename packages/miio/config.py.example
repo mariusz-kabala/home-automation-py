@@ -1,0 +1,10 @@
+lights = dict(
+    livingroom=dict(
+        ipAddress="127.0.0.1",
+        token="device-token"
+    ),
+    bedroom=dict(
+        ipAddress="127.0.0.1",
+        token="device-token"
+    )
+)
