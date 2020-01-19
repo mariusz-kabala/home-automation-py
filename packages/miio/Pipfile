@@ -11,9 +11,6 @@ python-miio = "*"
 paho-mqtt = "*"
 python-json-logger = "*"
 
-[requires]
-python_version = "3.8"
-
 [scripts]
 start = "python main.py"
 dev = "watchmedo shell-command --patterns='*.py' --command='python main.py' ."
