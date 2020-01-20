@@ -8,8 +8,8 @@
         - repo: homeAutomationPy
         - account: mariusz-kabala
         - privateKey: ~/.ssh/id_rsa
-        - DB_USER: "{{ db_user }}"
-        - DB_PASS: "{{ db_pass }}"
+        - STATS_DB_USER: "{{ db_user }}"
+        - STATS_DB_PASS: "{{ db_pass }}"
     
       tasks:
         - name: Set variables
