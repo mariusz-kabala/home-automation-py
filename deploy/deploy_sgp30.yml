@@ -8,8 +8,8 @@
         - repo: homeAutomationPy
         - account: mariusz-kabala
         - privateKey: ~/.ssh/id_rsa
-        - STATS_DB_USER: "{{ db_user }}"
-        - STATS_DB_PASS: "{{ db_pass }}"
+        - USER: "{{ dbuser }}"
+        - PASS: "{{ dbpass }}"
     
       tasks:
         - name: Set variables
@@ -41,7 +41,7 @@
     
         - name: Copy supervisor config template to remote
           become: yes
-          template: src={{local_copy_path}}/deploy/supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
+          template: src={{local_copy_path}}/deploy/supervisor/homeAutomation_{{ app }}.j2 dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
     
         - name: restore dependencies via pipenv
           command: pipenv install
