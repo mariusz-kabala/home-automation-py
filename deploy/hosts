@@ -1,2 +1,8 @@
 [pi4]
 192.168.0.109 ansible_user=pi
+
+[pi2]
+192.168.0.35 ansible_user=pi
+
+[piHAT]
+192.168.0.34 ansible_user=pi

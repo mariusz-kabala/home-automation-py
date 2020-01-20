@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+influxdb = "*"
+paho-mqtt = "*"
+adafruit-circuitpython-sgp30 = "*"
+python-json-logger = "*"
+
+[scripts]
+start = "python main.py"
