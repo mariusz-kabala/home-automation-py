@@ -95,6 +95,4 @@ if __name__ == '__main__':
 
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
 
-    systemd.daemon.notify('READY=1')
-
     client.loop_forever()
