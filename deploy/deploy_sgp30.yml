@@ -20,7 +20,7 @@
             supervisor_config_path: "homeAutomation_{{ app }}.conf"
     
         - name: Clone the repository
-          local_action: git repo="git@github.com:{{account}}/{{repo}}.git" dest={{local_copy_path}}
+          local_action: git repo="git@github.com:{{account}}/{{repo}}.git" dest={{local_copy_path}} version={{version}}
     
         - name: Retrieve current release folder
           command: readlink -f current
