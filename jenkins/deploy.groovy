@@ -18,9 +18,9 @@ pipeline {
                 }
             }
         }
-        stage ('Deploy miio') {
+        stage ('Deploy won') {
             when {
-                environment name: 'app', value: 'miio'
+                environment name: 'app', value: 'won'
             }
              steps {
                 script {
