@@ -7,7 +7,6 @@ from influxdb import InfluxDBClient
 from helpers import set_interval
 import json
 import os
-import systemd.daemon
 from logger import logger
 
 
