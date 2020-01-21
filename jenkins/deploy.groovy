@@ -37,14 +37,14 @@ pipeline {
              steps {
                 script {
                     sshagent(['jenkins-local-ssh-key']) {
-                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS}' -vvvv"
+                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS}'"
                     }
                 }
             }
         }
-        stage ('Deploy other') {
+        stage ('Deploy miio') {
             when {
-                expression { env.app != 'miio' }
+                environment name: 'app', value: 'miio'
             }
              steps {
                 script {
