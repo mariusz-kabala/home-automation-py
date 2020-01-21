@@ -37,7 +37,7 @@ pipeline {
              steps {
                 script {
                     sshagent(['jenkins-local-ssh-key']) {
-                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} db_user=${STATS_DB_USER} db_pass=${STATS_DB_PASS}' -vvvv"
+                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS}' -vvvv"
                     }
                 }
             }
@@ -59,9 +59,9 @@ pipeline {
         }
     }
 
-    // post { 
-    //     always { 
-    //         cleanWs()
-    //     }
-    // }
+    post { 
+        always { 
+            cleanWs()
+        }
+    }
 }
