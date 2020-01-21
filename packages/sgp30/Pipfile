@@ -10,7 +10,6 @@ influxdb = "*"
 paho-mqtt = "*"
 adafruit-circuitpython-sgp30 = "*"
 python-json-logger = "*"
-RPi.GPIO = "*"
 
 [scripts]
 start = "python main.py"
