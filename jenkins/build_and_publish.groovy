@@ -81,10 +81,12 @@ pipeline {
         stage ('Commit changes') {
             steps {
                 script {
-                    sh "git checkout ${branch}"
-                    sh "git add -A"
-                    sh "git commit -m 'chore: bump package version'"
-                    sh "git push origin ${branch}"
+                    sshagent(['jenkins-ssh-key']) {
+                        sh "git checkout ${branch}"
+                        sh "git add -A"
+                        sh "git commit -m 'chore: bump package version'"
+                        sh "git push origin ${branch}"
+                    }
                 }
             }
         }
