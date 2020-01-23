@@ -87,7 +87,7 @@ def read_sensor():
         publish_baselines()
 
 
-if __name__ == '__main__':
+def start():
     set_interval(read_sensor, 1)
 
     client.on_connect = on_mqtt_connect
