@@ -13,6 +13,30 @@ pipeline {
             steps {
                 script {
                     sh "printenv"
+                    try {
+                        branch = env.GIT_LOCAL_BRANCH
+                        branch = branch ?: env.GIT_BRANCH
+                        if (branch == 'detached') {
+                            branch = ''
+                        }
+                        branch = branch ?: env.ghprbActualCommit
+                    } catch (e) {
+                        println "GIT BRANCH not detected"
+                    }
+
+                    sh 'git config user.name "jenkins-kabala.tech"'
+                    sh 'git config user.email "jenkins@kabala.tech"'
+
+                    if (!branch) {
+                        error "GIT branch to process not found"
+                    }
+
+                    if (branch.startsWith('origin/')) {
+                        branch = branch.replaceAll('origin/', '')
+                    }
+
+                    println "GIT branch to process: ${branch}"
+                    manager.addShortText(branch, "white", "navy", "1px", "navy")
                 }
             }
         }
@@ -46,10 +70,11 @@ pipeline {
         stage ('Publish package') {
             steps {
                 script {
+                    sh "git checkout ${branch}"
                     dir("packages/${PACKAGE}") {
                         sh "poetry config repositories.kabala-tech https://pypi.kabala.tech"
                         sh "poetry config http-basic.kabala-tech ${REGISTRY_USER} ${REGISTRY_PASS}"
-                        sh "poetry publish"
+                        sh "poetry publish -r kabala-tech"
                     }
                 }
             }
