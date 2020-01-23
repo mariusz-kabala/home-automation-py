@@ -70,12 +70,21 @@ pipeline {
         stage ('Publish package') {
             steps {
                 script {
-                    sh "git checkout ${branch}"
                     dir("packages/${PACKAGE}") {
                         sh "poetry config repositories.kabala-tech https://pypi.kabala.tech"
                         sh "poetry config http-basic.kabala-tech ${REGISTRY_USER} ${REGISTRY_PASS}"
                         sh "poetry publish -r kabala-tech"
                     }
+                }
+            }
+        }
+        stage ('Commit changes') {
+            steps {
+                script {
+                    sh "git checkout ${branch}"
+                    sh "git add -A"
+                    sh "git commit -m 'chore: bump package version'"
+                    sh "git push origin ${branch}"
                 }
             }
         }
