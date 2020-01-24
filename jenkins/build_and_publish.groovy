@@ -90,6 +90,17 @@ pipeline {
                 }
             }
         }
+        stage ('Deploy') {
+            when {
+                environment name: 'deploy', value: 'true'
+            }
+            steps {
+                build job: 'HomeAutomationPY-Deploy', wait: false, parameters: [
+                    string(name: 'ghprbActualCommit', value: "${ghprbActualCommit}"),
+                    string(name: 'app', value: "${app}"),
+                ]
+            }
+        }
     }
 
     post { 
