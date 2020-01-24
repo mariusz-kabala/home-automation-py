@@ -19,9 +19,6 @@
             local_copy_path: "homeAutomationPy"
             supervisor_config_path: "homeAutomation_{{ app }}.conf"
     
-        - name: Clone the repository
-          local_action: git repo="git@github.com:{{account}}/{{repo}}.git" dest={{local_copy_path}} version={{version}}
-    
         - name: Retrieve current release folder
           command: readlink -f current
           register: current_release_path
@@ -36,17 +33,15 @@
             recurse=yes
             state=directory
     
-        - name: Copy application code to remote
-          copy: src={{local_copy_path}}/packages/{{app}}/ dest={{release_path}} mode=0600
+        - name: Install application
+          pip: 
+            name: https://pypi.kabala.tech/packages/sgp30-{{ version }}.tar.gz
+            virtualenv: "{{ release_path }}"
+            virtualenv_command: pyvenv
     
         - name: Copy supervisor config template to remote
           become: yes
           template: src=supervisor/homeAutomation_{{ app }}.j2 dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
-    
-        - name: restore dependencies via pipenv
-          command: pipenv install
-          args:
-            chdir: "{{ release_path }}"
     
         - name: Update symlink
           file:

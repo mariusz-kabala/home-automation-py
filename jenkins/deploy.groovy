@@ -1,5 +1,3 @@
-def branch = '';
-
 pipeline {
     agent { docker { image 'docker-registry.kabala.tech/python-poetry:latest' } }
     
@@ -11,6 +9,19 @@ pipeline {
     }
 
     stages {
+        stage ('Determine last version to deploy') {
+            when {
+                expression { env.VERSION == null }
+            }
+            steps {
+                dir ("packages/${app}") {
+                    env.VERSION = sh (
+                        script: "poetry version | awk '{print $2}'",
+                        returnStdout: true
+                    ).trim()
+                }
+            }
+        }
         stage ('Prepare') {
             steps {
                 script {
@@ -37,7 +48,7 @@ pipeline {
              steps {
                 script {
                     sshagent(['jenkins-local-ssh-key']) {
-                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${ghprbActualCommit}'"
+                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${VERSION}'"
                     }
                 }
             }
