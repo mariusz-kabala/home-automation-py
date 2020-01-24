@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage ('Determine last version to deploy') {
             when {
-                expression { env.VERSION == null }
+                expression { env.VERSION == "" }
             }
             steps {
                 dir ("packages/${app}") {
