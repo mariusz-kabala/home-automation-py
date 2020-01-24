@@ -97,7 +97,7 @@ pipeline {
             steps {
                 build job: 'HomeAutomationPY-Deploy', wait: false, parameters: [
                     string(name: 'ghprbActualCommit', value: "${ghprbActualCommit}"),
-                    string(name: 'app', value: "${app}"),
+                    string(name: 'app', value: "${PACKAGE}"),
                 ]
             }
         }
