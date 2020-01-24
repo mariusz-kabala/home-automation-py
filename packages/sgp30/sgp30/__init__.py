@@ -96,3 +96,7 @@ def start():
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
 
     client.loop_forever()
+
+if __name__ == '__main__':
+    start()
+
