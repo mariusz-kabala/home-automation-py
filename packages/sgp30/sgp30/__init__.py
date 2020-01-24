@@ -4,10 +4,10 @@ import busio
 import adafruit_sgp30
 import paho.mqtt.client as mqtt
 from influxdb import InfluxDBClient
-from helpers import set_interval
+from .helpers import set_interval
 import json
 import os
-from logger import logger
+from .logger import logger
 
 
 i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
