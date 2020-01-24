@@ -1,3 +1,5 @@
+def version = ''
+
 pipeline {
     agent { docker { image 'docker-registry.kabala.tech/python-poetry:latest' } }
     
@@ -16,14 +18,10 @@ pipeline {
             steps {
                 dir ("packages/${app}") {
                     script {
-                        def currentVersion = sh (
+                        version = sh (
                             script: 'poetry version | awk \'{print $2}\'',
                             returnStdout: true
                         ).trim()
-
-                        environmentVariables {
-                            env('VERSION', "${currentVersion}")
-                        }
                     }
                 }
             }
@@ -32,6 +30,10 @@ pipeline {
             steps {
                 script {
                     sh "printenv"
+
+                    if (!version) {
+                        version = env.VERSION
+                    }
                 }
             }
         }
@@ -54,7 +56,7 @@ pipeline {
              steps {
                 script {
                     sshagent(['jenkins-local-ssh-key']) {
-                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${VERSION}'"
+                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${version}'"
                     }
                 }
             }
