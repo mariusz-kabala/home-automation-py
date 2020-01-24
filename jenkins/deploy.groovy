@@ -15,13 +15,15 @@ pipeline {
             }
             steps {
                 dir ("packages/${app}") {
-                    def currentVersion = sh (
-                        script: 'poetry version | awk \'{print $2}\'',
-                        returnStdout: true
-                    ).trim()
+                    script {
+                        def currentVersion = sh (
+                            script: 'poetry version | awk \'{print $2}\'',
+                            returnStdout: true
+                        ).trim()
 
-                    environmentVariables {
-                        env('VERSION', "${currentVersion}")
+                        environmentVariables {
+                            env('VERSION', "${currentVersion}")
+                        }
                     }
                 }
             }
