@@ -1,6 +1,6 @@
 from threading import Timer
 from sensedashboard.sense import sense
-from sensedashboard.helpers import set_interval
+from sensedashboard.helpers import setInterval
 import time
 from .face import show_smiley_face, show_frowning_face
 from .clock import show_time
@@ -9,18 +9,35 @@ from .clock import show_time
 class Display:
     def __init__(self, mqtt):
         self.client = mqtt
+        self.isOn = False
         self.extra_to_show = ""
         self.conditions = True
+        self.on()
 
-        self.interval = set_interval(lambda: self.show(), 1)
+    def off(self):
+        self.interval.cancel()
+        sense.clear()
+
+        self.isOn = False
+
+    def on(self):
+        if self.isOn:
+            return
+
+        self.isOn = True
+        self.extra_to_show = ""
+        self.conditions = True
+        self.interval = setInterval(lambda: self.show(), 1)
 
     def show_msg(self, message: str, times: int = 3):
         self.interval.cancel()
-        
-        for x in range(times):
-            sense.show_message(message)
 
-        self.interval = set_interval(lambda: self.show(), 1)
+        count = 0
+        while count < times:
+            sense.show_message(message)
+            count += 1
+
+        self.interval = setInterval(lambda: self.show(), 1)
 
     def set_conditions(self, value):
         self.conditions = value
@@ -29,6 +46,9 @@ class Display:
         self.extra_to_show = ""
 
     def show_alert(self):
+        if self.isOn is False:
+            return
+
         self.extra_to_show = "!"
         t = Timer(10.0, self.clear_extra)
         t.start()

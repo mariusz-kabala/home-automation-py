@@ -1,7 +1,7 @@
 from influxdb import InfluxDBClient
 import os
 from sensedashboard.sense import sense
-from sensedashboard.helpers import set_interval
+from sensedashboard.helpers import setInterval
 import json
 
 
@@ -12,7 +12,7 @@ class Sensors:
 
         self.client = mqtt
 
-        self.interval = set_interval(lambda: self.read_sensors(), 3)
+        self.interval = setInterval(lambda: self.read_sensors(), 3)
 
     def save_in_db(self, pressure: int, humidity: int, temp: int):
         json_body = [
