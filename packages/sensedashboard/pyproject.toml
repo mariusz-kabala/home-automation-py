@@ -8,6 +8,7 @@ authors = ["Mariusz Kabala <mariusz@kabala.waw.pl>"]
 python = "^3.7"
 paho-mqtt = "^1.5.0"
 sense-hat = "^2.2.0"
+rtimulib = "^7.2.1"
 
 [tool.poetry.dev-dependencies]
 

@@ -27,6 +27,14 @@ version = "7.0.0"
 
 [[package]]
 category = "main"
+description = "richards-tech IMU Sensor Fusion Library"
+name = "rtimulib"
+optional = false
+python-versions = "*"
+version = "7.2.1"
+
+[[package]]
+category = "main"
 description = "Python module to control the Raspberry Pi Sense HAT used in the Astro Pi mission"
 name = "sense-hat"
 optional = false
@@ -38,7 +46,7 @@ numpy = "*"
 pillow = "*"
 
 [metadata]
-content-hash = "bd8be4cce45f62501587c1df3a4016b49f3f1b66c2b3645e0239121d305a7bb7"
+content-hash = "2fcfe59bb0a235c722a6170d57afdf16f3e52146040a6a5cf3ec77e171cb2180"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -91,6 +99,9 @@ pillow = [
     {file = "Pillow-7.0.0-cp38-cp38-win_amd64.whl", hash = "sha256:5f7ae9126d16194f114435ebb79cc536b5682002a4fa57fa7bb2cbcde65f2f4d"},
     {file = "Pillow-7.0.0-pp373-pypy36_pp73-win32.whl", hash = "sha256:8453f914f4e5a3d828281a6628cf517832abfa13ff50679a4848926dac7c0358"},
     {file = "Pillow-7.0.0.tar.gz", hash = "sha256:4d9ed9a64095e031435af120d3c910148067087541131e82b3e8db302f4c8946"},
+]
+rtimulib = [
+    {file = "RTIMULib-7.2.1.tar.gz", hash = "sha256:06541b526caca8d5cbc81d52bebd489736860e0f8b8701001cad50609acd2fd9"},
 ]
 sense-hat = [
     {file = "sense-hat-2.2.0.tar.gz", hash = "sha256:f000998d042d96ed722d459312e1bebd0107f9f3015cd34b3e4fabcab9c800af"},
