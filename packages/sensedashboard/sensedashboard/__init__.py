@@ -17,7 +17,7 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("home/senseHat/displayOn")
     client.subscribe("home/senseHat/displayOff")
 
-def on_mqtt_connect(client, userdata, msg):
+def on_message(client, userdata, msg):
     logger.info("New MQTT message. Topic: %s, payload: %s", msg.topic, str(msg.payload.decode("utf-8", "ignore")))
 
     if "home/alert" in msg.topic:
@@ -42,10 +42,9 @@ def on_mqtt_connect(client, userdata, msg):
         return
 
 client.on_connect = on_connect
+client.on_message = on_message
 
 def start():
-    client.on_connect = on_mqtt_connect
-
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
     
     client.loop_forever()
