@@ -9,9 +9,21 @@ from .clock import show_time
 class Display:
     def __init__(self, mqtt):
         self.client = mqtt
+        self.on()
+
+    def off(self):
+        self.interval.cancel()
+        sense.clear()
+
+        self.isOn = False
+
+    def on(self):
+        if self.isOn:
+            return
+
+        self.isOn = True
         self.extra_to_show = ""
         self.conditions = True
-
         self.interval = set_interval(lambda: self.show(), 1)
 
     def show_msg(self, message: str, times: int = 3):
