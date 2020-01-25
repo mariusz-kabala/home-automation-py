@@ -1,6 +1,6 @@
 from threading import Timer
 from sensedashboard.sense import sense
-from sensedashboard.helpers import set_interval
+from sensedashboard.helpers import setInterval
 import time
 from .face import show_smiley_face, show_frowning_face
 from .clock import show_time
@@ -27,7 +27,7 @@ class Display:
         self.isOn = True
         self.extra_to_show = ""
         self.conditions = True
-        self.interval = set_interval(lambda: self.show(), 1)
+        self.interval = setInterval(lambda: self.show(), 1)
 
     def show_msg(self, message: str, times: int = 3):
         self.interval.cancel()
@@ -35,7 +35,7 @@ class Display:
         for x in range(times):
             sense.show_message(message)
 
-        self.interval = set_interval(lambda: self.show(), 1)
+        self.interval = setInterval(lambda: self.show(), 1)
 
     def set_conditions(self, value):
         self.conditions = value
