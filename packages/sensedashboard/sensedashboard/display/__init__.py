@@ -46,6 +46,9 @@ class Display:
         self.extra_to_show = ""
 
     def show_alert(self):
+        if self.isOn is False:
+            return
+
         self.extra_to_show = "!"
         t = Timer(10.0, self.clear_extra)
         t.start()
