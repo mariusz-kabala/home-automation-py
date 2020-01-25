@@ -1,0 +1,20 @@
+[program:homeAutomation-sensedashboard]
+environment = 
+    MQTT_HOST=192.168.0.109,
+    MQTT_PORT=1883,
+    STATS_DB_HOST=192.168.0.109,
+    STATS_DB_PORT=8086,
+    STATS_DB_USER={{ USER }},
+    STATS_DB_PASS={{ PASS }},
+    STATS_DB_DB=home
+
+command=/opt/pytomation/sensedashboard/current/bin/python3 -m sensedashboard
+directory=/opt/pytomation/sensedashboard/current
+autostart=true
+autorestart=true
+user=pi
+stderr_logfile=/var/log/homeAutomation-sensedashboard.err.log
+stdout_logfile=/var/log/homeAutomation-sensedashboard.out.log
+
+[supervisorctl]
+serverurl=unix:///var/run/supervisor.sock
