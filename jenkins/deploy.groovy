@@ -61,6 +61,18 @@ pipeline {
                 }
             }
         }
+        stage ('Deploy sensedashboard') {
+            when {
+                environment name: 'app', value: 'sensedashboard'
+            }
+             steps {
+                script {
+                    sshagent(['jenkins-local-ssh-key']) {
+                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${version}'"
+                    }
+                }
+            }
+        }
         stage ('Deploy miio') {
             when {
                 environment name: 'app', value: 'miio'

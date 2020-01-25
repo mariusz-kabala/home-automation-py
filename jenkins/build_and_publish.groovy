@@ -41,6 +41,9 @@ pipeline {
             }
         }
         stage ('Install dependencies') {
+            when {
+                expression { !env.skip_install  }
+            }
             steps {
                 script {
                     dir("packages/${PACKAGE}") {
