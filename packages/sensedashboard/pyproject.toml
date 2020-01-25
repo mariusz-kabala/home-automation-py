@@ -9,6 +9,8 @@ python = "^3.7"
 paho-mqtt = "^1.5.0"
 sense-hat = "^2.2.0"
 rtimulib = "^7.2.1"
+influxdb = "^5.2.3"
+python-json-logger = "^0.1.11"
 
 [tool.poetry.dev-dependencies]
 
