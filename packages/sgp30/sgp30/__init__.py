@@ -4,11 +4,10 @@ import busio
 import adafruit_sgp30
 import paho.mqtt.client as mqtt
 from influxdb import InfluxDBClient
-from helpers import set_interval
+from .helpers import set_interval
 import json
 import os
-import systemd.daemon
-from logger import logger
+from .logger import logger
 
 
 i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
@@ -88,7 +87,7 @@ def read_sensor():
         publish_baselines()
 
 
-if __name__ == '__main__':
+def start():
     set_interval(read_sensor, 1)
 
     client.on_connect = on_mqtt_connect
@@ -96,6 +95,8 @@ if __name__ == '__main__':
 
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
 
-    systemd.daemon.notify('READY=1')
-
     client.loop_forever()
+
+if __name__ == '__main__':
+    start()
+

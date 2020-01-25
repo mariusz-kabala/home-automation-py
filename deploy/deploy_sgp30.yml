@@ -8,19 +8,16 @@
         - repo: homeAutomationPy
         - account: mariusz-kabala
         - privateKey: ~/.ssh/id_rsa
-        - DB_USER: {{ db_user }}
-        - DB_PASS: {{ db_pass }}
+        - USER: "{{ dbuser }}"
+        - PASS: "{{ dbpass }}"
     
       tasks:
         - name: Set variables
           set_fact:
             release_path: "{{ project_path }}/releases/{{ lookup('pipe','date +%Y%m%d%H%M%S') }}"
             current_path: "{{ project_path }}/current"
-            local_copy_path: "~/{{ repo }}"
+            local_copy_path: "homeAutomationPy"
             supervisor_config_path: "homeAutomation_{{ app }}.conf"
-    
-        - name: Clone the repository
-          local_action: git repo="git@github.com:{{account}}/{{repo}}.git" dest={{local_copy_path}}
     
         - name: Retrieve current release folder
           command: readlink -f current
@@ -36,17 +33,15 @@
             recurse=yes
             state=directory
     
-        - name: Copy application code to remote
-          copy: src={{local_copy_path}}/packages/{{app}}/ dest={{release_path}} mode=0600
+        - name: Install application
+          pip: 
+            name: https://pypi.kabala.tech/packages/sgp30-{{ version }}.tar.gz
+            virtualenv: "{{ release_path }}"
+            virtualenv_command: pyvenv
     
         - name: Copy supervisor config template to remote
           become: yes
-          template: src={{local_copy_path}}/deploy/supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
-    
-        - name: restore dependencies via pipenv
-          command: pipenv install
-          args:
-            chdir: "{{ release_path }}"
+          template: src=supervisor/homeAutomation_{{ app }}.j2 dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
     
         - name: Update symlink
           file:

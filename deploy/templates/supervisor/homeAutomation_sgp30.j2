@@ -4,11 +4,11 @@ environment =
     MQTT_PORT=1883,
     STATS_DB_HOST=192.168.0.109,
     STATS_DB_PORT=8086,
-    STATS_DB_USER={{ DB_USER }},
-    STATS_DB_PASS={{ DB_PASS }},
+    STATS_DB_USER={{ USER }},
+    STATS_DB_PASS={{ PASS }},
     STATS_DB_DB=home
 
-command=pipenv run start
+command=/opt/pytomation/sgp30/current/bin/python3 -m sgp30
 directory=/opt/pytomation/sgp30/current
 autostart=true
 autorestart=true
