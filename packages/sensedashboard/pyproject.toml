@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sensedashboard"
-version = "0.0.7"
+version = "0.0.8"
 description = ""
 authors = ["Mariusz Kabala <mariusz@kabala.waw.pl>"]
 
