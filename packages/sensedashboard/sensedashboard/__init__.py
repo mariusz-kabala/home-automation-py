@@ -34,10 +34,9 @@ def on_message(client, userdata, msg):
 
     if "home/senseHat/showMsg":
         msg = str(msg.payload.decode("utf-8", "ignore"))
-
-        logger.info("Showing custom message %s", msg)
-
         payload = json.loads(msg)
+
+        logger.info("Showing custom message %s", payload.message)
         display.show_msg(payload.message)
         return
 

@@ -31,8 +31,9 @@ class Display:
 
     def show_msg(self, message: str, times: int = 3):
         self.interval.cancel()
-        
-        for x in range(times):
+
+        count = 0
+        while count < times:
             sense.show_message(message)
 
         self.interval = setInterval(lambda: self.show(), 1)
