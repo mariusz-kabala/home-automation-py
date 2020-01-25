@@ -5,7 +5,7 @@ import sys
 logging.basicConfig(stream=sys.stdout, level=logging.INFO,
                     datefmt='%Y-%m-%d %H:%M:%S')
 
-logger = logging.getLogger('sgp30')
+logger = logging.getLogger('sensedashboard')
 
 format_str = '%(message)%(levelname)%(name)%(asctime)'
 
