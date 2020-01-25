@@ -42,7 +42,7 @@ pipeline {
         }
         stage ('Install dependencies') {
             when {
-                expression { skip_install != true  }
+                expression { !env.skip_install  }
             }
             steps {
                 script {
