@@ -32,7 +32,7 @@ def on_message(client, userdata, msg):
         display.off()
         return
 
-    if "home/senseHat/showMsg":
+    if "home/senseHat/showMsg" in msg.topic:
         try:
             payload = json.loads(str(msg.payload.decode("utf-8", "ignore")))
         except:
