@@ -39,8 +39,8 @@ def on_message(client, userdata, msg):
             logger.error("Invalid payload in showMsg command")
             return
 
-        logger.info("Showing custom message %s", payload.message)
-        display.show_msg(payload.message)
+        logger.info("Showing custom message %s", payload.get("message"))
+        display.show_msg(payload.get("message"))
         return
 
 client.on_connect = on_connect

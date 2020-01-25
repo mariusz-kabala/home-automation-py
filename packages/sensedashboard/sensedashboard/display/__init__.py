@@ -35,6 +35,7 @@ class Display:
         count = 0
         while count < times:
             sense.show_message(message)
+            count += 1
 
         self.interval = setInterval(lambda: self.show(), 1)
 
