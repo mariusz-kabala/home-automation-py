@@ -30,17 +30,17 @@
             mode=0755
             recurse=yes
             state=directory
+
+        - name: Copy supervisor config to remote
+          become: yes
+          copy: src=supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
     
         - name: Install application
           pip: 
-            name: https://pypi.kabala.tech/packages/sensedashboard-{{ version }}.tar.gz
+            name: https://pypi.kabala.tech/packages/{{ app }}-{{ version }}.tar.gz
             virtualenv: "{{ release_path }}"
             virtualenv_command: pyvenv
     
-        - name: Copy supervisor config to remote
-          become: yes
-          copy: src=deploy/supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
-      
         - name: Update symlink
           file:
             src={{ release_path }}
