@@ -39,7 +39,7 @@
     
         - name: Copy supervisor config to remote
           become: yes
-          copy: src={{local_copy_path}}/deploy/supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
+          copy: src=deploy/supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
       
         - name: Update symlink
           file:
