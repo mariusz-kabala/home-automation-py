@@ -41,6 +41,7 @@ def save_in_db():
         influx.write_points(json_body)
     except:
         logger.error('Can not write measurement into influxDB')
+        raise SystemExit
 
 
 def publish_readings():
@@ -76,11 +77,21 @@ def on_mqtt_message(client, userdata, msg):
 
     client.unsubscribe("home/sgp30/baseLines")
 
+def on_mqtt_disconnect(client, userdata, rc):
+    if rc != 0:
+        logger.error('Disconnected from MQTT')
+
 
 def read_sensor():
     global elapsed_sec
-    save_in_db()
-    publish_readings()
+
+    try:
+        save_in_db()
+        publish_readings()
+    except RuntimeError:
+        logger.error('Error while reading data from sensor')
+        raise SystemExit
+    
     elapsed_sec += 1
     if elapsed_sec > 10:
         elapsed_sec = 0
@@ -92,6 +103,7 @@ def start():
 
     client.on_connect = on_mqtt_connect
     client.on_message = on_mqtt_message
+    client.on_disconnect = 
 
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
 
