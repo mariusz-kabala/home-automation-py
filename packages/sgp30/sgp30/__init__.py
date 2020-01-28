@@ -103,7 +103,7 @@ def start():
 
     client.on_connect = on_mqtt_connect
     client.on_message = on_mqtt_message
-    client.on_disconnect = 
+    client.on_disconnect = on_mqtt_disconnect
 
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
 
