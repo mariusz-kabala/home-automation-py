@@ -4,13 +4,13 @@ import busio
 import adafruit_sgp30
 import paho.mqtt.client as mqtt
 from influxdb import InfluxDBClient
-from .helpers import set_interval
+from .helpers import setInterval
 import json
 import os
 from .logger import logger
 
 
-i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
+i2c = busio.I2C(board.SCL, board.SDA)
 
 # Create library object on our I2C port
 sgp30 = adafruit_sgp30.Adafruit_SGP30(i2c)
@@ -45,6 +45,8 @@ def save_in_db():
 
 
 def publish_readings():
+    logger.info("Saving readings: eCO2: % d, TVOC: % d",
+                sgp30.eCO2, sgp30.TVOC)
     client.publish("home/sensors/sgp30", json.dumps({
         "type": "sgp30",
         "state": {
@@ -77,6 +79,7 @@ def on_mqtt_message(client, userdata, msg):
 
     client.unsubscribe("home/sgp30/baseLines")
 
+
 def on_mqtt_disconnect(client, userdata, rc):
     if rc != 0:
         logger.error('Disconnected from MQTT')
@@ -91,7 +94,7 @@ def read_sensor():
     except RuntimeError:
         logger.error('Error while reading data from sensor')
         raise SystemExit
-    
+
     elapsed_sec += 1
     if elapsed_sec > 10:
         elapsed_sec = 0
@@ -99,7 +102,7 @@ def read_sensor():
 
 
 def start():
-    set_interval(read_sensor, 1)
+    setInterval(read_sensor, 5)
 
     client.on_connect = on_mqtt_connect
     client.on_message = on_mqtt_message
@@ -109,6 +112,6 @@ def start():
 
     client.loop_forever()
 
+
 if __name__ == '__main__':
     start()
-
