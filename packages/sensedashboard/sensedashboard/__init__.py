@@ -9,6 +9,7 @@ client = mqtt.Client()
 display = Display(client)
 sensors = Sensors(client)
 
+
 def on_connect(client, userdata, flags, rc):
     logger.info('Connected with result code %d', rc)
 
@@ -17,8 +18,15 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("home/senseHat/displayOn")
     client.subscribe("home/senseHat/displayOff")
 
+
+def on_disconnect(client, userdata, rc):
+    if rc != 0:
+        logger.error('Disconnected from MQTT')
+
+
 def on_message(client, userdata, msg):
-    logger.info("New MQTT message. Topic: %s, payload: %s", msg.topic, str(msg.payload.decode("utf-8", "ignore")))
+    logger.info("New MQTT message. Topic: %s, payload: %s",
+                msg.topic, str(msg.payload.decode("utf-8", "ignore")))
 
     if "home/alert" in msg.topic:
         display.show_alert()
@@ -43,13 +51,19 @@ def on_message(client, userdata, msg):
         display.show_msg(payload.get("message"))
         return
 
+
 client.on_connect = on_connect
 client.on_message = on_message
+client.on_disconnect = on_disconnect
+
 
 def start():
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
-    
+
+    logger.log('Application started')
+
     client.loop_forever()
+
 
 if __name__ == '__main__':
     start()

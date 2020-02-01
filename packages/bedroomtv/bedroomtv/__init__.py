@@ -11,6 +11,11 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("home/tv/bedroom/turnOn")
 
 
+def on_disconnect(client, userdata, rc):
+    if rc != 0:
+        logger.error('Disconnected from MQTT')
+
+
 def on_message(client, userdata, msg):
     logger.info("Turning on bedroom tv")
     os.system(
@@ -19,10 +24,13 @@ def on_message(client, userdata, msg):
 
 client.on_connect = on_connect
 client.on_message = on_message
+client.on_disconnect = on_disconnect
 
 
 def start():
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
+
+    logger.info('Application started')
 
     client.loop_forever()
 
