@@ -60,7 +60,7 @@ client.on_disconnect = on_disconnect
 def start():
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
 
-    logger.log('Application started')
+    logger.info('Application started')
 
     client.loop_forever()
 
