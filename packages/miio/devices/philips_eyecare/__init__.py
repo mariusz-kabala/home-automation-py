@@ -1,16 +1,14 @@
 from helpers.logger import logger
-from config import yeelights
-from devices.yeelight.command import Command
-from miio.yeelight import Yeelight
+from config import philipsEyeCares
+from .command import Command
+from miio.philips_eyecare import PhilipsEyecare
 import json
 
 devices = dict()
 
-for deviceName in yeelights:
-    device = yeelights.get(deviceName)
-    yeelight = Yeelight(ip=device.get('ipAddress'), token=device.get('token'))
-
-    devices[deviceName] = yeelight
+for deviceName in philipsEyeCares:
+    device = philipsEyeCares.get(deviceName)    
+    devices[deviceName] = PhilipsEyecare(ip=device.get('ipAddress'), token=device.get('token'))
 
 
 def handle_message(msg):
@@ -21,28 +19,31 @@ def handle_message(msg):
     deviceName = splitted[2]
     toExec = splitted[3]
 
-    if toExec in ['status']:
+    device = devices.get(deviceName)
+
+    if device is None:
+        logger.error(
+            'Device %s is not supported, update config file', deviceName)
         return
 
-    light = devices.get(deviceName)
     try:
         jsonMsg = json.loads(str(msg.payload.decode("utf-8", "ignore")))
     except:
         jsonMsg = {}
 
-    if light is None:
-        logger.error(
-            'Device %s is not supported, update config file', deviceName)
-        return
-
-    command = Command(light=light, deviceName=deviceName)
+    command = Command(device=device, deviceName=deviceName)
 
     handlers = dict(
         turnOn=command.on,
         turnOff=command.off,
         getStatus=command.status,
         setBrightness=command.brightness,
-        toggle=command.toggle
+        ambientOn=command.ambient_on,
+        ambientOff=command.ambient_off,
+        eyecareOn=command.eyecare_on,
+        eyecareOff=command.eyecare_off,
+        smartNightLightOn=command.smart_night_light_on,
+        smartNightLightOff=command.smart_night_light_off,
     )
 
     commandToExec = handlers.get(toExec)

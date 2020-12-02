@@ -5,11 +5,16 @@ verify_ssl = true
 
 [dev-packages]
 watchdog = "*"
+pyyaml = "*"
+argh = "*"
 
 [packages]
 python-miio = "*"
 paho-mqtt = "*"
 python-json-logger = "*"
+Flask = "*"
+redis-py-cluster = "*"
+redis = "*"
 
 [scripts]
 start = "python main.py"
