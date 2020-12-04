@@ -15,7 +15,7 @@ def get_group_status(statuses, mapper):
         value_type = mapper.get(key)
 
         for status in statuses:
-            if key not in status:
+            if status is None or key not in status:
                 continue
             elif value_type is bool:
                 if key not in result or result[key] is False:

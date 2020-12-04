@@ -41,14 +41,13 @@ if __name__ == '__main__':
 
     client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
 
-    # httpWorker = threading.Thread(target=app.run)
-    # httpWorker.setDaemon(True)
+    httpWorker = threading.Thread(target=app.run)
+    httpWorker.setDaemon(True)
 
-    # signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGINT, signal_handler)
     
     logger.info("Application is running")
     
-    # httpWorker.start()
-    # client.loop_forever()
-    # start_checking()
-    app.run(debug=True)
+    start_checking()
+    httpWorker.start()
+    client.loop_forever()
