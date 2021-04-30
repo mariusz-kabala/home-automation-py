@@ -41,9 +41,9 @@ pipeline {
             }
         }
         stage ('Install dependencies') {
-            when {
-                expression { !env.skip_install  }
-            }
+            // when {
+            //     expression { !env.skip_install  }
+            // }
             steps {
                 script {
                     sh "pip install poetry ansible"
