@@ -57,7 +57,7 @@ pipeline {
                 script {
                     dir("packages/${PACKAGE}") {
                         sh "poetry version ${VERSION}"
-                        sh "echo PYTHONPATH"
+                        sh "python -c 'import sys; print(sys.path)'"
                     }
                 }
             }
