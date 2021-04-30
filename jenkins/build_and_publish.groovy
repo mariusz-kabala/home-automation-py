@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'python:3.9.4' } }
+    agent { docker { image 'docker-registry.kabala.tech/python-poetry:latest' } }
     
     environment {
         CI = 'true'
@@ -41,12 +41,11 @@ pipeline {
             }
         }
         stage ('Install dependencies') {
-            // when {
-            //     expression { !env.skip_install  }
-            // }
+            when {
+                expression { !env.skip_install  }
+            }
             steps {
                 script {
-                    sh "pip install poetry ansible"
                     dir("packages/${PACKAGE}") {
                         sh "poetry install"
                     }
