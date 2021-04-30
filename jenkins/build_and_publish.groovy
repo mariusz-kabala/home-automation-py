@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'docker-registry.kabala.tech/python-poetry:latest' } }
+    agent { docker { image 'python:3.9.4' } }
     
     environment {
         CI = 'true'
@@ -46,6 +46,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh "pip install poetry ansible"
                     dir("packages/${PACKAGE}") {
                         sh "poetry install"
                     }
