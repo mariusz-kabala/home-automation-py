@@ -56,8 +56,8 @@ pipeline {
             steps {
                 script {
                     dir("packages/${PACKAGE}") {
-                        sh "poetry config cache-dir ${PWD}/app/cache"
-                        sh "poetry config virtualenvs.path ${PWD}/app/virtualenvs"
+                        sh "poetry config cache-dir ${WORKSPACE_TMP}/app/cache"
+                        sh "poetry config virtualenvs.path ${WORKSPACE_TMP}/app/virtualenvs"
                         sh "poetry config --list"
 
                         sh "poetry version ${VERSION}"
