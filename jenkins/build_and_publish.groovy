@@ -57,6 +57,7 @@ pipeline {
                 script {
                     dir("packages/${PACKAGE}") {
                         sh "poetry version ${VERSION}"
+                        sh "echo PYTHONPATH"
                     }
                 }
             }
