@@ -56,6 +56,8 @@ pipeline {
             steps {
                 script {
                     dir("packages/${PACKAGE}") {
+                        sh "mkdir ${WORKSPACE_TMP}/cache"
+                        sh "mkdir ${WORKSPACE_TMP}/virtualenvs"
                         sh "poetry config cache-dir ${WORKSPACE_TMP}/cache"
                         sh "poetry config virtualenvs.path ${WORKSPACE_TMP}/virtualenvs"
                         sh "poetry config --list"
