@@ -3,7 +3,7 @@
     
       vars:
         - ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
-        - homeDir: /home/pi
+        - homeDir: /home/jenkins
         - project_path: /opt/pytomation/{{ app }}
         - repo: homeAutomationPy
         - account: mariusz-kabala
@@ -16,9 +16,6 @@
             current_path: "{{ project_path }}/current"
             local_copy_path: "~/{{ repo }}"
             supervisor_config_path: "homeAutomation_{{ app }}.conf"
-    
-        - name: Clone the repository
-          local_action: git repo="git@github.com:{{account}}/{{repo}}.git" dest={{local_copy_path}}
     
         - name: Retrieve current release folder
           command: readlink -f current
@@ -33,18 +30,16 @@
             mode=0755
             recurse=yes
             state=directory
-    
-        - name: Copy application code to remote
-          copy: src={{local_copy_path}}/packages/{{app}}/ dest={{release_path}} mode=0600
-    
+
         - name: Copy supervisor config to remote
           become: yes
-          copy: src={{local_copy_path}}/deploy/supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
+          copy: src=supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
     
-        - name: restore dependencies via pipenv
-          command: pipenv install
-          args:
-            chdir: "{{ release_path }}"
+        - name: Install application
+          pip: 
+            name: https://pypi.kabala.tech/packages/{{ app }}-{{ version }}.tar.gz
+            virtualenv: "{{ release_path }}"
+            virtualenv_command: pyvenv
     
         - name: Update symlink
           file:
