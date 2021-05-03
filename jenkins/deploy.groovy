@@ -6,6 +6,7 @@ pipeline {
     environment {
         CI = 'true'
         GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
+        JENKINS_USER_PASS = credentials('srv2-jenkins-user-pass')
         // STATS_DB_USER = credentials('home-automation-stats-db-user')
         // STATS_DB_PASS = credentials('home-automation-stats-db-pass')
     }
@@ -44,7 +45,7 @@ pipeline {
              steps {
                 script {
                     sshagent(['jenkins-local-ssh-key']) {
-                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} version=${ghprbActualCommit}'"
+                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} version=${ghprbActualCommit} sudo_pass=${JENKINS_USER_PASS}'"
                     }
                 }
             }
