@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "won"
+version = "0.0.1"
+description = ""
+authors = ["Mariusz Kabala <mariusz@kabala.waw.pl>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+wakeonlan = "*"
+paho-mqtt = "*"
+python-json-logger = "*"
+flask = "*"
+requests = "*"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+[package]
+include = ["*.py"]
