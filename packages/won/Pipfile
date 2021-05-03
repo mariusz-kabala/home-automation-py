@@ -9,6 +9,8 @@ verify_ssl = true
 wakeonlan = "*"
 paho-mqtt = "*"
 python-json-logger = "*"
+flask = "*"
+requests = "*"
 
 [scripts]
 start = "python main.py"

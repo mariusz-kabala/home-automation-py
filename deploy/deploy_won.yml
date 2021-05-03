@@ -1,5 +1,5 @@
 ---
-    - hosts: pi4
+    - hosts: homeSrv2
     
       vars:
         - ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
