@@ -61,6 +61,8 @@ pipeline {
             steps {
                 script {
                     dir("packages/${PACKAGE}") {
+                        
+                        sh "ls /.cache"
                         sh "poetry config --list"
                         // sh "mkdir ${WORKSPACE_TMP}/tmp"
                         // sh "poetry config cache-dir ${WORKSPACE_TMP}/tmp/cache"
