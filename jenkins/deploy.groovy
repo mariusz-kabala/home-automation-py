@@ -6,8 +6,8 @@ pipeline {
     environment {
         CI = 'true'
         GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
-        STATS_DB_USER = credentials('home-automation-stats-db-user')
-        STATS_DB_PASS = credentials('home-automation-stats-db-pass')
+        // STATS_DB_USER = credentials('home-automation-stats-db-user')
+        // STATS_DB_PASS = credentials('home-automation-stats-db-pass')
     }
 
     stages {
@@ -49,30 +49,30 @@ pipeline {
                 }
             }
         }
-        stage ('Deploy sgp30') {
-            when {
-                environment name: 'app', value: 'sgp30'
-            }
-             steps {
-                script {
-                    sshagent(['jenkins-local-ssh-key']) {
-                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${version}'"
-                    }
-                }
-            }
-        }
-        stage ('Deploy sensedashboard') {
-            when {
-                environment name: 'app', value: 'sensedashboard'
-            }
-             steps {
-                script {
-                    sshagent(['jenkins-local-ssh-key']) {
-                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${version}'"
-                    }
-                }
-            }
-        }
+        // stage ('Deploy sgp30') {
+        //     when {
+        //         environment name: 'app', value: 'sgp30'
+        //     }
+        //      steps {
+        //         script {
+        //             sshagent(['jenkins-local-ssh-key']) {
+        //                 sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${version}'"
+        //             }
+        //         }
+        //     }
+        // }
+        // stage ('Deploy sensedashboard') {
+        //     when {
+        //         environment name: 'app', value: 'sensedashboard'
+        //     }
+        //      steps {
+        //         script {
+        //             sshagent(['jenkins-local-ssh-key']) {
+        //                 sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} dbuser=${STATS_DB_USER} dbpass=${STATS_DB_PASS} version=${version}'"
+        //             }
+        //         }
+        //     }
+        // }
         stage ('Deploy bedroomtv') {
             when {
                 environment name: 'app', value: 'bedroomtv'
