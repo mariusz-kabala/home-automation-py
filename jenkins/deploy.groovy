@@ -45,7 +45,7 @@ pipeline {
              steps {
                 script {
                     sshagent(['jenkins-local-ssh-key']) {
-                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} version=${ghprbActualCommit} sudo_pass=${JENKINS_USER_PASS}' -vv"
+                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} version=${ghprbActualCommit} sudo_pass=${JENKINS_USER_PASS}' -vvv"
                     }
                 }
             }
