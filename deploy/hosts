@@ -8,4 +8,4 @@
 192.168.0.34 ansible_user=pi
 
 [homeSrv2]
-192.168.0.195 ansible_user=root
+192.168.0.195 ansible_user=jenkins
