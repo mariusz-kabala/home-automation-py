@@ -1,5 +1,10 @@
 pipeline {
-    agent { docker { image 'docker-registry.kabala.tech/python-poetry:latest' } }
+    agent { 
+        docker { 
+            image 'docker-registry.kabala.tech/python-poetry:latest'
+            args '-v /tmp/:/.cache'
+        } 
+    }
     
     environment {
         CI = 'true'
