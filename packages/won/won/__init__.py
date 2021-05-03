@@ -1,9 +1,9 @@
 import os
 import paho.mqtt.client as mqtt
-from config import devices
+from .config import devices
 import re
 from wakeonlan import send_magic_packet
-from logger import logger
+from .logger import logger
 from flask import Flask
 import threading
 
