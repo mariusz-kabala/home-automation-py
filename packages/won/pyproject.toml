@@ -7,8 +7,8 @@ authors = ["Mariusz Kabala <mariusz@kabala.waw.pl>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 wakeonlan = "*"
-paho-mqtt = "*"
-python-json-logger = "*"
+paho-mqtt = "^1.5.0"
+python-json-logger = "^0.1.11"
 flask = "*"
 requests = "*"
 
