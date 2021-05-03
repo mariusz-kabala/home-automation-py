@@ -41,7 +41,7 @@ def turn_on_device(name):
 
     return ('', 200)
 
-if __name__ == '__main__':
+def start():
     client.on_connect = on_connect
     client.on_message = on_message
 
@@ -52,6 +52,10 @@ if __name__ == '__main__':
     client.loop_start()
 
     app.run(debug=True, use_reloader=False, port=5000, host='0.0.0.0')
+
+
+if __name__ == '__main__':
+    start()    
 
 
     

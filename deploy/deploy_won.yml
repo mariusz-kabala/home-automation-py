@@ -3,6 +3,7 @@
     
       vars:
         - ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+        - ansible_become_password: "{{ sudo_pass }}"
         - homeDir: /home/jenkins
         - project_path: /opt/pytomation/{{ app }}
         - repo: homeAutomationPy
@@ -39,7 +40,7 @@
           pip: 
             name: https://pypi.kabala.tech/packages/{{ app }}-{{ version }}.tar.gz
             virtualenv: "{{ release_path }}"
-            virtualenv_command: pyvenv
+            virtualenv_command: virtualenv
     
         - name: Update symlink
           file:
