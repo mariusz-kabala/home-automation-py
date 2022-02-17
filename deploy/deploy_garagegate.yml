@@ -38,6 +38,7 @@
         repo: "{{ git_repo_url }}"
         dest: "{{ release_path }}"
         version: "{{ repo_branch }}"
+        key_file: "{{homeDir}}/id_rsa"
         accept_hostkey: yes
       register: git_finished
 
