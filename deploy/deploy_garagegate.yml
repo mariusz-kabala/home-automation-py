@@ -32,7 +32,6 @@
         state=directory
 
     - name: Copy supervisor config to remote
-      become: yes
       copy: src=supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
 
     - name: Install application
@@ -47,7 +46,6 @@
         state=link
 
     - name: Restart the app
-      become: yes
       supervisorctl:
         name: homeAutomation-{{app}}
         state: restarted
