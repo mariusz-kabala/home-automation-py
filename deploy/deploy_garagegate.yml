@@ -10,7 +10,7 @@
   tasks:
     - name: Set variables
       set_fact:
-        release_path: "{{ project_path }}/releases/{{ lookup('pipe','date +%Y%m%d%H%M%S') }}"
+        release_path: "{{ project_path }}/releases/{{ version }}"
         current_path: "{{ project_path }}/current"
         local_copy_path: "~/{{ repo }}"
         supervisor_config_path: "homeAutomation_{{ app }}.conf"
