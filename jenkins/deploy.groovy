@@ -30,6 +30,7 @@ pipeline {
         stage ('Prepare') {
             steps {
                 script {
+                    sh "ansible-galaxy collection install community.general"
                     sh "printenv"
 
                     if (!version) {
