@@ -34,8 +34,6 @@
     - name: Install application
       pip:
         name: https://pypi.kabala.tech/packages/{{ app }}-{{ version }}.tar.gz
-        virtualenv: "{{ release_path }}"
-        virtualenv_command: virtualenv
 
     - name: Update symlink
       file: src={{ release_path }}
