@@ -3,13 +3,10 @@
 
   vars:
     - ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
-    - ansible_become_password: "{{ sudo_pass }}"
     - homeDir: /root
     - project_path: /opt/pytomation/{{ app }}
     - repo: homeAutomationPy
-    - account: mariusz-kabala
-    - privateKey: ~/.ssh/id_rsa
-
+    
   tasks:
     - name: Set variables
       set_fact:
