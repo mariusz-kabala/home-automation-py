@@ -79,3 +79,6 @@ def start():
     client.loop_start()
 
     app.run(debug=False, use_reloader=False, port=int(os.environ['HTTP_PORT']), host='0.0.0.0')
+
+if __name__ == '__main__':
+    start()
