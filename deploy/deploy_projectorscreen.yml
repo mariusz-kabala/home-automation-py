@@ -1,0 +1,57 @@
+---
+    - hosts: pi1
+    
+      vars:
+        - ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+        - ansible_become_password: "{{ sudo_pass }}"
+        - homeDir: /home/jenkins
+        - project_path: /opt/pytomation/{{ app }}
+        - repo: homeAutomationPy
+        - account: mariusz-kabala
+        - privateKey: ~/.ssh/id_rsa
+    
+      tasks:
+        - name: Set variables
+          set_fact:
+            release_path: "{{ project_path }}/releases/{{ lookup('pipe','date +%Y%m%d%H%M%S') }}"
+            current_path: "{{ project_path }}/current"
+            local_copy_path: "~/{{ repo }}"
+            supervisor_config_path: "homeAutomation_{{ app }}.conf"
+    
+        - name: Retrieve current release folder
+          command: readlink -f current
+          register: current_release_path
+          ignore_errors: yes
+          args:
+            chdir: "{{ project_path }}"
+          
+        - name: Create new folder
+          file:
+            dest={{ release_path }}
+            mode=0755
+            recurse=yes
+            state=directory
+
+        - name: Copy supervisor config to remote
+          become: yes
+          copy: src=supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
+    
+        - name: Install application
+          pip: 
+            name: https://pypi.kabala.tech/packages/{{ app }}-{{ version }}.tar.gz
+            virtualenv: "{{ release_path }}"
+            virtualenv_command: virtualenv
+    
+        - name: Update symlink
+          file:
+            src={{ release_path }}
+            dest={{ current_path }}
+            state=link
+        
+        - name: Restart the app
+          become: yes
+          supervisorctl:
+            name: homeAutomation-{{app}}
+            state: restarted
+            config: /etc/supervisor/conf.d/{{ supervisor_config_path }}
+      

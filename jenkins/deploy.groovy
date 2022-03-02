@@ -114,6 +114,18 @@ pipeline {
                 }
             }
         }
+        stage ('Deploy projectorscreen') {
+            when {
+                environment name: 'app', value: 'projectorscreen'
+            }
+             steps {
+                script {
+                    sshagent(['jenkins-local-ssh-key']) {
+                        sh "ansible-playbook -i deploy/hosts deploy/deploy_${app}.yml -e 'app=${app} version=${version}'"
+                    }
+                }
+            }
+        }
     }
 
     post { 
