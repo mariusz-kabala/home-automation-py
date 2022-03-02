@@ -8,9 +8,7 @@ client = mqtt.Client()
 app = Flask(__name__)
 
 pulselength = 350
-
 rfdevice = RFDevice(17)
-rfdevice.enable_tx()
 
 def on_connect(client, userdata, flags, rc):
     client.subscribe("projector-screen/+")
@@ -28,18 +26,21 @@ def on_message(client, userdata, msg):
 
 
 def move_screen_up():
+    rfdevice.enable_tx()
     rfdevice.tx_code(9703026, None, pulselength)
     rfdevice.cleanup()
     pass
 
 
 def move_screen_down():
+    rfdevice.enable_tx()
     rfdevice.tx_code(9703028, None, pulselength)
     rfdevice.cleanup()
     pass
 
 
 def stop_screen():
+    rfdevice.enable_tx()
     rfdevice.tx_code(9703032, None, pulselength)
     rfdevice.cleanup()
     pass
