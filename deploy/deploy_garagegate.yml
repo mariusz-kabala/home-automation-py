@@ -2,12 +2,10 @@
 - hosts: openWrt1
 
   vars:
-    - ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+    - ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ProxyCommand="ssh 192.168.50.72 -l root -W %h:%p"'
     - homeDir: /root
     - project_path: /opt/pytomation/{{ app }}
     - repo: homeAutomationPy
-    - git_repo_url: git@github.com:mariusz-kabala/home-automation-py.git
-    - repo_branch: master
     
   tasks:
     - name: Set variables
@@ -33,21 +31,20 @@
     - name: Copy supervisor config to remote
       copy: src=supervisor/{{ supervisor_config_path }} dest=/etc/supervisor/conf.d/{{ supervisor_config_path }}
 
-    - name: Clone a private repository
-      git:
-        repo: "{{ git_repo_url }}"
-        dest: "{{ release_path }}"
-        version: "{{ repo_branch }}"
-        key_file: "{{homeDir}}/id_rsa"
-        accept_hostkey: yes
-      register: git_finished
-
+    - name: Install application
+      pip: 
+        name: https://pypi.kabala.tech/packages/{{ app }}-{{ version }}.tar.gz
+        virtualenv: "{{ release_path }}"
+        virtualenv_command: virtualenv
+    
     - name: Update symlink
-      file: src={{ release_path }}
+      file:
+        src={{ release_path }}
         dest={{ current_path }}
         state=link
-
+    
     - name: Restart the app
+      become: yes
       supervisorctl:
         name: homeAutomation-{{app}}
         state: restarted
