@@ -7,11 +7,6 @@ from rpi_rf import RFDevice
 client = mqtt.Client()
 app = Flask(__name__)
 
-map = {
-    'up': 9703026,
-    'down': 9703028,
-    'stop': 9703032
-}
 pulselength = 350
 
 rfdevice = RFDevice(17)
@@ -33,19 +28,19 @@ def on_message(client, userdata, msg):
 
 
 def move_screen_up():
-    rfdevice.tx_code(9703026, "default", pulselength)
+    rfdevice.tx_code(9703026, None, pulselength)
     rfdevice.cleanup()
     pass
 
 
 def move_screen_down():
-    rfdevice.tx_code(9703028, "default", pulselength)
+    rfdevice.tx_code(9703028, None, pulselength)
     rfdevice.cleanup()
     pass
 
 
 def stop_screen():
-    rfdevice.tx_code(9703032, "default", pulselength)
+    rfdevice.tx_code(9703032, None, pulselength)
     rfdevice.cleanup()
     pass
 
