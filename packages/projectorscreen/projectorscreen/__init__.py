@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 import paho.mqtt.client as mqtt
+from .logger import logger
 from rpi_rf import RFDevice
 
 client = mqtt.Client()
@@ -65,3 +66,16 @@ def stop_route():
     stop_screen()
 
     return ('', 200)
+
+
+def start():
+    client.on_connect = on_connect
+    client.on_message = on_message
+
+    client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
+
+    logger.info("Projector screen manager is running")
+
+    client.loop_start()
+
+    app.run(debug=False, use_reloader=False, port=int(os.environ['HTTP_PORT']), host='0.0.0.0')
