@@ -8,6 +8,7 @@ authors = ["Mariusz Kabała <mariusz@kabala.waw.pl>"]
 python = "^3.9"
 paho-mqtt = "^1.5.0"
 requests = "*"
+python-json-logger = "^0.1.11"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
