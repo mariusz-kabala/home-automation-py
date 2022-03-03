@@ -11,6 +11,7 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, msg):
+    logger.info("making request to garage")
     requests.get('http://192.168.1.243/s/p')
 
 def start():
