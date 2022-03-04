@@ -8,10 +8,14 @@ authors = ["Mariusz Kabała <mariusz@kabala.waw.pl>"]
 python = "^3.9"
 paho-mqtt = "^1.5.0"
 requests = "*"
-python-json-logger = "^0.1.11"
+python-json-logger = "^2.0.2"
+python-dotenv = "^0.19.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+
+[tool.poetry.scripts]
+start = 'garagegate:start'
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

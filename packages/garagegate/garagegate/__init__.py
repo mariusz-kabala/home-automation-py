@@ -2,6 +2,10 @@ import os
 import paho.mqtt.client as mqtt
 from .logger import logger
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 client = mqtt.Client()
 
@@ -22,7 +26,7 @@ def start():
 
     logger.info("MQTT is running")
 
-    client.loop_start()
+    client.loop_forever()
 
 if __name__ == '__main__':
     start()
