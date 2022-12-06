@@ -26,7 +26,7 @@ pipeline {
             steps {
                     checkout([
                             $class                           : 'GitSCM',
-                            branches                         : [[name: "${branch}"]],
+                            branches                         : [[name: "master"]],
                             browser                          : [$class: 'GithubWeb', repoUrl: 'https://github.com/mariusz-kabala/home-automation-py'],
                             doGenerateSubmoduleConfigurations: false,
                             userRemoteConfigs                : [[
