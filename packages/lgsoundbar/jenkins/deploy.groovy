@@ -4,9 +4,6 @@ pipeline {
     environment {
         DOCKER_REGISTRY_USERNAME = credentials('docker-registry-username')
         DOCKER_REGISTRY_PASSWORD = credentials('docker-registry-password')
-    }
-
-    environment {
         app = ''
         CI = 'true'
         GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no'
