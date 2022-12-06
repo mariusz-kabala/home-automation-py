@@ -29,7 +29,6 @@ class Mqtt:
 
     def subscribeToTopics(self):
         topics = list(map(lambda topic : (self.getTopic(topic), 0), self.subscriptions.keys()))
-        print(topics)
         self.client.subscribe(topics)
 
         for topic, func in self.subscriptions.items():

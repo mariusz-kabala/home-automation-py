@@ -24,3 +24,7 @@ variable "network_name" {}
 variable "mqtt_host" {}
 
 variable "device_ip" {}
+
+variable "http_port" {
+  default = "8888"
+}

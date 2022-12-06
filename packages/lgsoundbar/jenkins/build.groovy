@@ -77,5 +77,17 @@ pipeline {
                 }
             }
         }
+        stage ('Deploy') {
+            when {
+                environment name: 'deploy', value: 'true'
+            }
+            steps {
+                script {
+                    build job: 'home/python_lgsoundbar_deploy', wait: false, parameters: [
+                        string(name: 'VERSION', value: "v${VERSION}"),
+                    ]
+                }
+            }
+        }
     }
 }

@@ -19,12 +19,13 @@ resource "docker_container" "lgsoundbar" {
 
   labels {
     label = "traefik.http.services.soundbar.loadbalancer.server.port"
-    value = "4000"
+    value = "${var.http_port}"
   }
 
   env = [
       "MQTT_HOST=${var.mqtt_host}",
       "DEVICE_IP=${var.device_ip}",
+      "HTTP_PORT=${var.http_port}",
       "CONSUL_HOST=${var.consul_host}",
       "CONSUL_PORT=${var.consul_port}"
   ]
