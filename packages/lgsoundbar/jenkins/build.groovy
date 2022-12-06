@@ -62,9 +62,7 @@ pipeline {
                 dir("packages/lgsoundbar") {
                     script {
                         docker.withRegistry('https://docker-registry.kabala.tech', 'docker-registry-credentials') {
-                            sh """
-                                cat pyproject.toml | grep -A2 '^\[tool\.poetry\]$'
-                            """
+                            sh "./scripts/version.sh"
                         }
                     }
                 }
