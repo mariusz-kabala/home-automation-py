@@ -64,7 +64,7 @@ pipeline {
                         VERSION = sh (
                             script: "./scripts/version.sh",
                             returnStdout: true
-                        )
+                        ).trim() 
 
                         println "version: ${VERSION}"
 
