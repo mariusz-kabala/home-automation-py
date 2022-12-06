@@ -6,7 +6,7 @@ authors = ["Mariusz Kabała <mariusz@kabala.waw.pl>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Flask = "^2.0.3"
+Flask = "^2.2.2"
 paho-mqtt = "^1.6.1"
 python-json-logger = "^0.1.11"
 rpi_rf = "^0.9.7"

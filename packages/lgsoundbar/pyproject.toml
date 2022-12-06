@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "lgsoundbar"
+version = "0.1.0"
+description = ""
+authors = ["Mariusz Kabała <mariusz@kabala.tech>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+temescal = "^0.5"
+tornado = "^6.2"
+paho-mqtt = "^1.6.1"
+python-json-logger = "^2.0.4"
+python-dotenv = "^0.21.0"
+
+[tool.poetry.scripts]
+start = 'lgsoundbar:start'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
