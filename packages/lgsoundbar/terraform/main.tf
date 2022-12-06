@@ -1,6 +1,6 @@
 resource "docker_container" "lgsoundbar" {
   name  = "lgsoundbar"
-  image = "${var.DOCKER_REGISTRY}/home/lgsoundbar:${var.tag}"
+  image = "${var.DOCKER_REGISTRY}/lgsoundbar:${var.tag}"
   restart = "always"
 
   networks_advanced {
