@@ -1,7 +1,5 @@
-def branch = ''
-
 pipeline {
-    agent any
+    agent { docker { image 'docker-registry.kabala.tech/alpine-terraform:latest' } }
 
     environment {
         app = ''
@@ -15,30 +13,12 @@ pipeline {
             steps {
                 script {
                     sh 'printenv'
-                    try {
-                        branch = env.GIT_LOCAL_BRANCH
-                        branch = branch ?: env.GIT_BRANCH
-                        if (branch == 'detached') {
-                            branch = ''
-                        }
-                        branch = branch ?: env.ghprbActualCommit
-                    } catch (e) {
-                        println 'GIT BRANCH not detected'
-                    }
-
+                    
                     sh 'git config user.name "jenkins-kabala.tech"'
                     sh 'git config user.email "jenkins@kabala.tech"'
-
-                    if (!branch) {
-                        error 'GIT branch to process not found'
-                    }
-
-                    if (branch.startsWith('origin/')) {
-                        branch = branch.replaceAll('origin/', '')
-                    }
-
-                    println "GIT branch to process: ${branch}"
-                    manager.addShortText(branch, 'white', 'navy', '1px', 'navy')
+                    
+                    manager.addShortText("${env.VERSION}", 'white', 'navy', '1px', 'navy')
+                    manager.addShortText("${env.DEPLOY_ENVIRONMENT}", "white", "blue", "1px", "navy")
                 }
             }
         }
@@ -57,7 +37,7 @@ pipeline {
                     ])
             }
         }
-        stage ('Build') {
+        stage ('Deploy') {
             steps {
                 dir("packages/lgsoundbar") {
                     script {
