@@ -70,8 +70,8 @@ pipeline {
 
                         def app = docker.build("lgsoundbar", "-f Dockerfile .")
                         docker.withRegistry('https://docker-registry.kabala.tech', 'docker-registry-credentials') {
-                            currentApp.push("v${VERSION}")
-                            currentApp.push("latest")
+                            app.push("v${VERSION}")
+                            app.push("latest")
                         }
                     }
                 }
