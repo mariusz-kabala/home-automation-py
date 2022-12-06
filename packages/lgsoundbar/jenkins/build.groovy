@@ -66,7 +66,7 @@ pipeline {
                             returnStatus: true
                         )
 
-                        println '${VERSION}' 
+                        println "${VERSION}"
                         // docker.withRegistry('https://docker-registry.kabala.tech', 'docker-registry-credentials') {
                         //     sh 
                         // }
