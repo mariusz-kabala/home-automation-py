@@ -63,7 +63,7 @@ pipeline {
                     script {
                         VERSION = sh (
                             script: "./scripts/version.sh",
-                            returnStatus: true
+                            returnStdout: true
                         )
 
                         println "${VERSION}"
