@@ -61,9 +61,15 @@ pipeline {
             steps {
                 dir("packages/lgsoundbar") {
                     script {
-                        docker.withRegistry('https://docker-registry.kabala.tech', 'docker-registry-credentials') {
-                            sh "./scripts/version.sh"
-                        }
+                        VERSION = sh (
+                            script: "./scripts/version.sh",
+                            returnStatus: true
+                        ).trim()
+
+                        println '${VERSION}' 
+                        // docker.withRegistry('https://docker-registry.kabala.tech', 'docker-registry-credentials') {
+                        //     sh 
+                        // }
                     }
                 }
             }
