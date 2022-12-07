@@ -21,8 +21,8 @@ class Mqtt:
 
     def connect(self):
         logger.info('Connecting to {host} on port {port}'.format(host=MQTT_HOST, port=MQTT_PORT))
-        self.client.connect(MQTT_HOST, MQTT_PORT, 60)
-        self.client.loop_forever()
+        self.client.connect_async(MQTT_HOST, MQTT_PORT, 60)
+        self.client.loop_start()
 
     def getTopic(self, topic):
         return '{prefix}{topic}'.format(prefix = MQTT_TOPIC, topic = topic)
