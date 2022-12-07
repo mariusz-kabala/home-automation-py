@@ -144,10 +144,8 @@ class HealthCheck(tornado.web.RequestHandler):
         self.start = datetime.now()
 
     def get(self):
-        self.setStatus(200)
         self.write({
             "status": True,
             "startedAt": self.start.strftime("%d/%m/%Y %H:%M:%S")
         })
-        self.finish()
         
