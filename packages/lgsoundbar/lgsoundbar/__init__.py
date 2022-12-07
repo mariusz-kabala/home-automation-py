@@ -5,7 +5,7 @@ from . import routes
 from .logger import logger
 from .soundbar import Soundbar
 from .mqtt import Mqtt
-from .config import HTTP_PORT
+from .config import HTTP_PORT, URL_PREFIX
 
 def make_app():
     mqtt = Mqtt({
@@ -26,24 +26,24 @@ def make_app():
     mqtt.connect()
 
     return tornado.web.Application([
-        (r"/settings", routes.SettingsHandler),
-        (r"/eq", routes.EqHandler),
-        (r"/info", routes.InfoHandler),
-        (r"/func", routes.FuncHandler),
-        (r"/play", routes.PlayHandler),
-        (r"/product", routes.ProductHandler),
-        (r"/c4a", routes.C4aHandler),
-        (r"/radio", routes.RadioHandler),
-        (r"/ap", routes.ApHandler), # nie dziala
-        (r"/update", routes.UpdateHandler),
-        (r"/build", routes.BuildHandler),
-        (r"/option", routes.OptionHandler),
-        (r"/mac", routes.MacHandler),
-        (r"/mem-mon", routes.MemMonHandler),
-        (r"/test", routes.TestHandler),
-        (r"/set/night-mode", routes.TestHandler),
-        (r"/set/volume", routes.SetVolume),
-        (r"/set/mute", routes.SetMute),
+        (r"/{}/settings".format(URL_PREFIX), routes.SettingsHandler),
+        (r"/{}/eq".format(URL_PREFIX), routes.EqHandler),
+        (r"/{}/info".format(URL_PREFIX), routes.InfoHandler),
+        (r"/{}/func".format(URL_PREFIX), routes.FuncHandler),
+        (r"/{}/play".format(URL_PREFIX), routes.PlayHandler),
+        (r"/{}/product".format(URL_PREFIX), routes.ProductHandler),
+        (r"/{}/c4a".format(URL_PREFIX), routes.C4aHandler),
+        (r"/{}/radio".format(URL_PREFIX), routes.RadioHandler),
+        (r"/{}/ap".format(URL_PREFIX), routes.ApHandler), # nie dziala
+        (r"/{}/update".format(URL_PREFIX), routes.UpdateHandler),
+        (r"/{}/build".format(URL_PREFIX), routes.BuildHandler),
+        (r"/{}/option".format(URL_PREFIX), routes.OptionHandler),
+        (r"/{}/mac".format(URL_PREFIX), routes.MacHandler),
+        (r"/{}/mem-mon".format(URL_PREFIX), routes.MemMonHandler),
+        (r"/{}/test".format(URL_PREFIX), routes.TestHandler),
+        (r"/{}/set/night-mode".format(URL_PREFIX), routes.TestHandler),
+        (r"/{}/set/volume".format(URL_PREFIX), routes.SetVolume),
+        (r"/{}/set/mute".format(URL_PREFIX), routes.SetMute),
     ], soundbar=sb)
 
 def start():

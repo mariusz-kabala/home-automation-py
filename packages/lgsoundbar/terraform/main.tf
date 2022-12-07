@@ -14,7 +14,7 @@ resource "docker_container" "lgsoundbar" {
 
   labels {
     label = "traefik.http.routers.soundbar.rule"
-    value = "Host(`${var.app_domain}`) && PathPrefix(`/soundbar`)"
+    value = "Host(`${var.app_domain}`) && PathPrefix(`/${var.url_prefix}`)"
   }
 
   labels {
@@ -26,6 +26,7 @@ resource "docker_container" "lgsoundbar" {
       "MQTT_HOST=${var.mqtt_host}",
       "DEVICE_IP=${var.device_ip}",
       "HTTP_PORT=${var.http_port}",
+      "URL_PREFIX=${var.url_prefix}",
       "CONSUL_HOST=${var.consul_host}",
       "CONSUL_PORT=${var.consul_port}"
   ]
