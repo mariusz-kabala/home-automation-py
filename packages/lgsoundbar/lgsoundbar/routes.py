@@ -139,7 +139,7 @@ class SetMute(AppHandler):
         self.setStatus(200)
         self.finish()
 
-class HealthCheck():
+class HealthCheck(tornado.web.RequestHandler):
     def initialize(self):
         self.start = datetime.now()
 
