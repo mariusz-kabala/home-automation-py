@@ -40,22 +40,22 @@ class Mqtt:
 
         match msg:
             case "SPK_LIST_VIEW_INFO":
-                self.mqttClient.publish('{}/info'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/info'.format(MQTT_TOPIC), json.dump(payload))
 
             case "FUNC_VIEW_INFO":
-                self.mqttClient.publish('{}/func'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/func'.format(MQTT_TOPIC), json.dump(payload))
 
             case 'SETTING_VIEW_INFO':
-                self.mqttClient.publish('{}/settings'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/settings'.format(MQTT_TOPIC), json.dump(payload))
 
             case 'PRODUCT_INFO':
-                self.mqttClient.publish('{}/product'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/product'.format(MQTT_TOPIC), json.dump(payload))
 
             case 'BUILD_INFO_DEV':
-                self.mqttClient.publish('{}/build'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/build'.format(MQTT_TOPIC), json.dump(payload))
             
             case 'MAC_INFO_DEV':
-                self.mqttClient.publish('{}/mac'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/mac'.format(MQTT_TOPIC), json.dump(payload))
 
             case 'EQ_VIEW_INFO':
-                self.mqttClient.publish('{}/eq'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/eq'.format(MQTT_TOPIC), json.dump(payload))
