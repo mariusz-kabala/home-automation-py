@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lgsoundbar"
-version = "0.2.3"
+version = "0.2.4"
 description = ""
 authors = ["Mariusz Kabała <mariusz@kabala.tech>"]
 readme = "README.md"
@@ -12,6 +12,7 @@ tornado = "^6.2"
 paho-mqtt = "^1.6.1"
 python-json-logger = "^2.0.4"
 python-dotenv = "^0.21.0"
+python-consul2 = "^0.1.5"
 
 [tool.poetry.scripts]
 start = 'lgsoundbar:start'

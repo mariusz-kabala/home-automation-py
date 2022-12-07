@@ -1,5 +1,6 @@
 import tornado.web
 import asyncio
+from datetime import datetime
 
 class AppHandler(tornado.web.RequestHandler):
     def initialize(self):
@@ -137,3 +138,16 @@ class SetMute(AppHandler):
 
         self.setStatus(200)
         self.finish()
+
+class HealthCheck():
+    def initialize(self):
+        self.start = datetime.now()
+
+    def get(self):
+        self.setStatus(200)
+        self.write({
+            "status": True,
+            "startedAt": self.start.strftime("%d/%m/%Y %H:%M:%S")
+        })
+        self.finish()
+        

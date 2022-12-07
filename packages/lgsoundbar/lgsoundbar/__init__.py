@@ -5,6 +5,7 @@ from . import routes
 from .logger import logger
 from .soundbar import Soundbar
 from .mqtt import Mqtt
+from .consul import register_in_consul
 from .config import HTTP_PORT, URL_PREFIX
 
 def make_app():
@@ -26,6 +27,7 @@ def make_app():
     mqtt.connect()
 
     return tornado.web.Application([
+        (r"/{}/health".format(URL_PREFIX), routes.HealthCheck),
         (r"/{}/settings".format(URL_PREFIX), routes.SettingsHandler),
         (r"/{}/eq".format(URL_PREFIX), routes.EqHandler),
         (r"/{}/info".format(URL_PREFIX), routes.InfoHandler),
@@ -48,6 +50,7 @@ def make_app():
 
 def start():
     app = make_app()
+    register_in_consul()
     app.listen(HTTP_PORT)
 
     logger.info('Application started on port {}'.format(HTTP_PORT))
