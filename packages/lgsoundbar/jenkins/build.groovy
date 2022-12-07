@@ -67,6 +67,7 @@ pipeline {
                         ).trim() 
 
                         println "version: ${VERSION}"
+                        manager.addShortText("${VERSION}", 'white', 'navy', '1px', 'navy')
 
                         def app = docker.build("lgsoundbar", "-f Dockerfile .")
                         docker.withRegistry('https://docker-registry.kabala.tech', 'docker-registry-credentials') {
