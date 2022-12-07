@@ -38,24 +38,26 @@ class Mqtt:
         if not self.client.is_connected:
             return
 
+        logger.info("Publishing a new msg: {}".format(msg))
+        
         match msg:
             case "SPK_LIST_VIEW_INFO":
-                self.client.publish('{}/info'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/info'.format(MQTT_TOPIC), json.dumps(payload), retain=True)
 
             case "FUNC_VIEW_INFO":
-                self.client.publish('{}/func'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/func'.format(MQTT_TOPIC), json.dumps(payload), retain=True)
 
             case 'SETTING_VIEW_INFO':
-                self.client.publish('{}/settings'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/settings'.format(MQTT_TOPIC), json.dumps(payload), retain=True)
 
             case 'PRODUCT_INFO':
-                self.client.publish('{}/product'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/product'.format(MQTT_TOPIC), json.dumps(payload))
 
             case 'BUILD_INFO_DEV':
-                self.client.publish('{}/build'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/build'.format(MQTT_TOPIC), json.dumps(payload))
             
             case 'MAC_INFO_DEV':
-                self.client.publish('{}/mac'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/mac'.format(MQTT_TOPIC), json.dumps(payload))
 
             case 'EQ_VIEW_INFO':
-                self.client.publish('{}/eq'.format(MQTT_TOPIC), json.dump(payload))
+                self.client.publish('{}/eq'.format(MQTT_TOPIC), json.dumps(payload), retain=True)
