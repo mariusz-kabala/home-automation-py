@@ -8,9 +8,10 @@ authors = ["Mariusz Kabala <mariusz@kabala.waw.pl>"]
 python = "^3.7"
 wakeonlan = "*"
 paho-mqtt = "^1.5.0"
-python-json-logger = "^0.1.11"
 flask = "*"
 requests = "*"
+python-json-logger = "^2.0.4"
+python-dotenv = "^0.21.0"
 
 [build-system]
 requires = ["poetry>=0.12"]
@@ -18,3 +19,6 @@ build-backend = "poetry.masonry.api"
 
 [package]
 include = ["*.py"]
+
+[tool.poetry.scripts]
+start = "won:start"

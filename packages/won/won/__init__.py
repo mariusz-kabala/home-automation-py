@@ -1,17 +1,16 @@
-import os
 import paho.mqtt.client as mqtt
-from .config import devices
+from .config import devices, MQTT_HOST, MQTT_PORT, URL_PREFIX, HTTP_PORT
 import re
 from wakeonlan import send_magic_packet
 from .logger import logger
 from flask import Flask
-import threading
+from datetime import datetime
 
 client = mqtt.Client()
+startTime = datetime.now()
 app = Flask(__name__)
 
 def get_device_mac_address(device):
-    print(device)
     if re.match("[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", device.lower()):
         return device
 
@@ -34,25 +33,37 @@ def on_message(client, userdata, msg):
     send_magic_packet(device)
     logger.info('Magic packet to %s has been sent', device)
 
-@app.route('/turn_on/<name>', methods=['GET',])
+
+
+@app.route('/{}/turn_on/<name>'.format(URL_PREFIX), methods=['GET',])
 def turn_on_device(name):
     device = get_device_mac_address(name)
+
+    if device is None:
+        return ('', 404)
 
     send_magic_packet(device)
 
     return ('', 200)
 
+@app.route('/{}/health'.format(URL_PREFIX), methods=['GET',])
+def health_check():
+    return ({
+        "status": True,
+        "startedAt": startTime.strftime("%d/%m/%Y %H:%M:%S")
+    }, 200)
+
 def start():
     client.on_connect = on_connect
     client.on_message = on_message
 
-    client.connect(os.environ['MQTT_HOST'], int(os.environ['MQTT_PORT']), 60)
+    client.connect(MQTT_HOST, MQTT_PORT, 60)
 
     logger.info("MQTT is running")
 
     client.loop_start()
 
-    app.run(debug=True, use_reloader=False, port=5000, host='0.0.0.0')
+    app.run(debug=False, use_reloader=False, port=HTTP_PORT, host='0.0.0.0')
 
 
 if __name__ == '__main__':
