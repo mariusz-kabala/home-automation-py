@@ -42,7 +42,7 @@ pipeline {
         }
         stage ('Deploy') {
             steps {
-                dir("packages/lgsoundbar/terraform") {
+                dir("packages/won/terraform") {
                     script {
                         docker.withRegistry('https://docker-registry.kabala.tech', 'docker-registry-credentials') {
                             sh "terraform init"
