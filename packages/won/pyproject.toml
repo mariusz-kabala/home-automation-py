@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "won"
-version = "0.0.8"
+version = "0.0.9"
 description = ""
 authors = ["Mariusz Kabala <mariusz@kabala.waw.pl>"]
 
@@ -12,6 +12,7 @@ flask = "*"
 requests = "*"
 python-json-logger = "^2.0.4"
 python-dotenv = "^0.21.0"
+python-consul2 = "^0.1.5"
 
 [build-system]
 requires = ["poetry>=0.12"]
