@@ -1,6 +1,7 @@
 import tornado.platform.asyncio
 import tornado.ioloop
 import tornado.web
+import logging
 from . import routes
 from .logger import logger
 from .soundbar import Soundbar
@@ -25,6 +26,8 @@ def make_app():
 
     mqtt.subscribeToTopics()
     mqtt.connect()
+
+    logging.getLogger('tornado.access').disabled = True
 
     return tornado.web.Application([
         (r"/{}/health".format(URL_PREFIX), routes.HealthCheck),
