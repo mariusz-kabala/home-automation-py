@@ -2,10 +2,11 @@ resource "docker_container" "won" {
   name  = "won"
   image = "${var.DOCKER_REGISTRY}/won:${var.tag}"
   restart = "always"
+  network_mode = "host"
 
-  networks_advanced {
-      name = var.network_name
-  }
+  # networks_advanced {
+  #     name = var.network_name
+  # }
 
   labels {
     label = "traefik.enable"
