@@ -1,7 +1,7 @@
 FROM python:3.11
 
 RUN mkdir /app 
-COPY lgsoundbar /app/lgsoundbar
+COPY won /app/won
 COPY pyproject.toml /app 
 COPY poetry.lock /app
 COPY README.md /app 
