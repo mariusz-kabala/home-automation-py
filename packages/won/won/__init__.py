@@ -3,6 +3,7 @@ from .config import devices, MQTT_HOST, MQTT_PORT, URL_PREFIX, HTTP_PORT
 import re
 from wakeonlan import send_magic_packet
 from .logger import logger
+from .consul import register_in_consul
 from flask import Flask
 from datetime import datetime
 
@@ -56,6 +57,8 @@ def health_check():
 def start():
     client.on_connect = on_connect
     client.on_message = on_message
+
+    register_in_consul()
 
     client.connect(MQTT_HOST, MQTT_PORT, 60)
 
