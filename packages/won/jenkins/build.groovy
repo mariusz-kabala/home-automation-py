@@ -84,7 +84,7 @@ pipeline {
             }
             steps {
                 script {
-                    build job: 'home/python_lgsoundbar_deploy', wait: false, parameters: [
+                    build job: 'home/python_won_deploy', wait: false, parameters: [
                         string(name: 'VERSION', value: "v${VERSION}"),
                         string(name: 'DEPLOY_ENVIRONMENT', value: env.DEPLOY_ENVIRONMENT),
                     ]
